@@ -1,0 +1,45 @@
+name: Build Sahi Bol apps
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.11.1"
+      - name: Build APK
+        run: gradle assembleDebug
+        env:
+          SAHIBOL_SERVER_URL: ${{ secrets.SAHIBOL_SERVER_URL }}
+          SAHIBOL_APP_KEY: ${{ secrets.SAHIBOL_APP_KEY }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SahiBol-Android-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+  ios:
+    runs-on: macos-15
+    defaults:
+      run:
+        working-directory: ios
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make Xcode project
+        run: brew install xcodegen && xcodegen
+      - name: Check that it builds (no signing)
+        run: >
+          xcodebuild -project SahiBol.xcodeproj -scheme SahiBol
+          -sdk iphonesimulator -destination 'generic/platform=iOS Simulator'
+          CODE_SIGNING_ALLOWED=NO build

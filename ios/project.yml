@@ -1,0 +1,52 @@
+name: SahiBol
+options:
+  bundleIdPrefix: co.jkdesign
+  deploymentTarget:
+    iOS: "16.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    # Put your server link and app key here (same as the server's SAHIBOL_APP_KEY)
+    SAHIBOL_SERVER_URL: "https://YOUR-LINK.onrender.com"
+    SAHIBOL_APP_KEY: "change-me"
+targets:
+  SahiBol:
+    type: application
+    platform: iOS
+    sources: [App]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: co.jkdesign.sahibol
+        TARGETED_DEVICE_FAMILY: "1"
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Sahi Bol
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+    dependencies:
+      - target: SahiBolKeyboard
+  SahiBolKeyboard:
+    type: app-extension
+    platform: iOS
+    sources: [Keyboard]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: co.jkdesign.sahibol.keyboard
+        TARGETED_DEVICE_FAMILY: "1"
+    info:
+      path: Keyboard/Info.plist
+      properties:
+        CFBundleDisplayName: Sahi Bol
+        SahiBolServerURL: $(SAHIBOL_SERVER_URL)
+        SahiBolAppKey: $(SAHIBOL_APP_KEY)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.keyboard-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).KeyboardViewController
+          NSExtensionAttributes:
+            RequestsOpenAccess: true
+            IsASCIICapable: false
+            PrefersRightToLeft: false
+            PrimaryLanguage: en-IN
