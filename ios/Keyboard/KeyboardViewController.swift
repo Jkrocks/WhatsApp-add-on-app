@@ -1,22 +1,23 @@
 import UIKit
 
+private func hex(_ v: UInt32) -> UIColor {
+    UIColor(red: CGFloat((v >> 16) & 0xFF) / 255, green: CGFloat((v >> 8) & 0xFF) / 255, blue: CGFloat(v & 0xFF) / 255, alpha: 1)
+}
+
 /// Sahi Bol keyboard: normal typing + a "Fix" bar that corrects the whole message.
 final class KeyboardViewController: UIInputViewController {
 
     // Keycap palette: face colour + darker "lip" under it
     struct Cap { let face: UIColor; let lip: UIColor; let text: UIColor }
-    private static func hex(_ v: UInt32) -> UIColor {
-        UIColor(red: CGFloat((v >> 16) & 0xFF) / 255, green: CGFloat((v >> 8) & 0xFF) / 255, blue: CGFloat(v & 0xFF) / 255, alpha: 1)
-    }
-    private let letterCap = Cap(face: hex(0x3A3D40), lip: Self.hex(0x1F2123), text: Self.hex(0xF2F3F4))
-    private let numberCap = Cap(face: hex(0xC9CDD1), lip: Self.hex(0x8A9096), text: Self.hex(0x141414))
-    private let darkCap = Cap(face: hex(0x26282A), lip: Self.hex(0x121314), text: Self.hex(0xF2F3F4))
-    private let orangeCap = Cap(face: hex(0xFF6A13), lip: Self.hex(0xB04606), text: Self.hex(0x111111))
-    private let pinkCap = Cap(face: hex(0xFF45D2), lip: Self.hex(0xA8238A), text: Self.hex(0x111111))
-    private let blueCap = Cap(face: hex(0x9BBCCB), lip: Self.hex(0x5E7F8F), text: Self.hex(0x111111))
-    private let whiteCap = Cap(face: hex(0xEEF0F2), lip: Self.hex(0xA3A9AF), text: Self.hex(0x111111))
-    private let navyCap = Cap(face: hex(0x1F3C91), lip: Self.hex(0x10225A), text: .white)
-    private let ink = Self.hex(0x141414)
+    private let letterCap = Cap(face: hex(0x3A3D40), lip: hex(0x1F2123), text: hex(0xF2F3F4))
+    private let numberCap = Cap(face: hex(0xC9CDD1), lip: hex(0x8A9096), text: hex(0x141414))
+    private let darkCap = Cap(face: hex(0x26282A), lip: hex(0x121314), text: hex(0xF2F3F4))
+    private let orangeCap = Cap(face: hex(0xFF6A13), lip: hex(0xB04606), text: hex(0x111111))
+    private let pinkCap = Cap(face: hex(0xFF45D2), lip: hex(0xA8238A), text: hex(0x111111))
+    private let blueCap = Cap(face: hex(0x9BBCCB), lip: hex(0x5E7F8F), text: hex(0x111111))
+    private let whiteCap = Cap(face: hex(0xEEF0F2), lip: hex(0xA3A9AF), text: hex(0x111111))
+    private let navyCap = Cap(face: hex(0x1F3C91), lip: hex(0x10225A), text: .white)
+    private let ink = hex(0x141414)
     private func bold(_ size: CGFloat) -> UIFont { .systemFont(ofSize: size, weight: .heavy, width: .condensed) }
 
     private let status = UILabel()
@@ -32,7 +33,7 @@ final class KeyboardViewController: UIInputViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Self.hex(0x0E0F10)
+        view.backgroundColor = hex(0x0E0F10)
 
         let root = UIStackView()
         root.axis = .vertical
@@ -49,7 +50,7 @@ final class KeyboardViewController: UIInputViewController {
         // Result card
         resultBox.axis = .vertical
         resultBox.spacing = 6
-        resultBox.backgroundColor = Self.hex(0xEEF0F2)
+        resultBox.backgroundColor = hex(0xEEF0F2)
         resultBox.layer.cornerRadius = 14
         resultBox.isLayoutMarginsRelativeArrangement = true
         resultBox.directionalLayoutMargins = .init(top: 10, leading: 12, bottom: 10, trailing: 12)
@@ -81,7 +82,7 @@ final class KeyboardViewController: UIInputViewController {
         root.addArrangedSubview(bar)
 
         status.font = .systemFont(ofSize: 12)
-        status.textColor = Self.hex(0xB8BCC0)
+        status.textColor = hex(0xB8BCC0)
         status.numberOfLines = 2
         status.isHidden = true
         root.addArrangedSubview(status)
