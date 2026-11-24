@@ -29,6 +29,7 @@ class SahiBolIME : InputMethodService() {
     private val pinkCap = Cap(c("#FF45D2"), c("#A8238A"), c("#111111"))
     private val blueCap = Cap(c("#9BBCCB"), c("#5E7F8F"), c("#111111"))
     private val whiteCap = Cap(c("#EEF0F2"), c("#A3A9AF"), c("#111111"))
+    private val jkCap = Cap(c("#FFD21F"), c("#B8930A"), c("#111111"))
     private val navyCap = Cap(c("#1F3C91"), c("#10225A"), c("#FFFFFF"))
     private val ink = c("#141414")
     private val muted = c("#55595D")
@@ -76,6 +77,7 @@ class SahiBolIME : InputMethodService() {
         bar.addView(pill("POLITE", pinkCap) { fix("polite") }, chipParams())
         bar.addView(pill("SHORT", blueCap) { fix("short") }, chipParams())
         bar.addView(pill("हिंदी", whiteCap) { fix("hindi") }, chipParams())
+        bar.addView(pill("JK", jkCap) {}.apply { isClickable = false; contentDescription = "JK Design" }, chipParams())
         root.addView(HorizontalScrollView(this).apply { isHorizontalScrollBarEnabled = false; addView(bar) })
 
         status = TextView(this).apply { setTextColor(c("#B8BCC0")); textSize = 12f; setPadding(dp(6), dp(4), dp(6), dp(4)); visibility = View.GONE }

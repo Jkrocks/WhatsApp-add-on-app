@@ -16,6 +16,7 @@ final class KeyboardViewController: UIInputViewController {
     private let pinkCap = Cap(face: hex(0xFF45D2), lip: hex(0xA8238A), text: hex(0x111111))
     private let blueCap = Cap(face: hex(0x9BBCCB), lip: hex(0x5E7F8F), text: hex(0x111111))
     private let whiteCap = Cap(face: hex(0xEEF0F2), lip: hex(0xA3A9AF), text: hex(0x111111))
+    private let jkCap = Cap(face: hex(0xFFD21F), lip: hex(0xB8930A), text: hex(0x111111))
     private let navyCap = Cap(face: hex(0x1F3C91), lip: hex(0x10225A), text: .white)
     private let ink = hex(0x141414)
     private func bold(_ size: CGFloat) -> UIFont { .systemFont(ofSize: size, weight: .heavy, width: .condensed) }
@@ -77,6 +78,10 @@ final class KeyboardViewController: UIInputViewController {
             pill("SHORT", cap: blueCap) { [weak self] in self?.fix("short") },
             pill("हिंदी", cap: whiteCap) { [weak self] in self?.fix("hindi") },
         ])
+        let jk = pill("JK", cap: jkCap) {}
+        jk.isUserInteractionEnabled = false
+        jk.accessibilityLabel = "JK Design"
+        bar.addArrangedSubview(jk)
         bar.spacing = 6
         bar.distribution = .fillProportionally
         root.addArrangedSubview(bar)
